@@ -1,0 +1,60 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "anaguma.org",
+    "enableMultiJS": false,
+    "longName": "Sushiyuki Go Around",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/sushiyukiFace2_short.png",
+                "name": "SUSHI_S",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/28.png",
+                "menuIcon": true,
+                "name": "ICON",
+                "type": "bitmap"
+            },
+            {
+                "characterRegex": "[0-9:.\\%]",
+                "file": "fonts/virgo.ttf",
+                "name": "FONT_VIGRO_12",
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:.%]",
+                "file": "fonts/virgo.ttf",
+                "name": "FONT_VIGRO_24",
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:.%]",
+                "file": "fonts/virgo.ttf",
+                "name": "FONT_VIGRO_30",
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:]",
+                "file": "fonts/virgo.ttf",
+                "name": "FONT_VIGRO_28",
+                "type": "font"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Sushiyuki",
+    "targetPlatforms": [
+        "basalt",
+        "chalk"
+    ],
+    "uuid": "b1cd1cc0-e30e-4294-b820-8a14c15d4894",
+    "versionLabel": "1.1",
+    "watchapp": {
+        "watchface": true
+    }
+}
