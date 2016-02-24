@@ -21,27 +21,31 @@
                 "type": "bitmap"
             },
             {
-                "characterRegex": "[0-9:.\\%]",
+                "characterRegex": "[0-9:]",
                 "file": "fonts/virgo.ttf",
-                "name": "FONT_VIGRO_12",
-                "type": "font"
-            },
-            {
-                "characterRegex": "[0-9:.%]",
-                "file": "fonts/virgo.ttf",
-                "name": "FONT_VIGRO_24",
+                "name": "FONT_VIGRO_26",
+                "targetPlatforms": null,
                 "type": "font"
             },
             {
                 "characterRegex": "[0-9:.%]",
                 "file": "fonts/virgo.ttf",
                 "name": "FONT_VIGRO_30",
+                "targetPlatforms": null,
                 "type": "font"
             },
             {
-                "characterRegex": "[0-9:]",
+                "characterRegex": "[0-9:.%]",
                 "file": "fonts/virgo.ttf",
-                "name": "FONT_VIGRO_28",
+                "name": "FONT_VIGRO_24",
+                "targetPlatforms": null,
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:.\\%]",
+                "file": "fonts/virgo.ttf",
+                "name": "FONT_VIGRO_12",
+                "targetPlatforms": null,
                 "type": "font"
             }
         ]

@@ -6,33 +6,20 @@ static TextLayer *s_battery_layer;
 static GFont s_time_font;
 static BitmapLayer *s_background_layer;
 static GBitmap *s_background_bitmap;
-
-static void update_time() {
-  // Get a tm structure
-  time_t temp = time(NULL); 
-  struct tm *tick_time = localtime(&temp);
-  static char buffer[] = "00:00:00";
-  if(clock_is_24h_style() == true) {
-    //Use 2h hour format
-    strftime(buffer, sizeof("00:00:00"), "%H:%M:%S", tick_time);
-  } else {
-    //Use 12 hour format
-    strftime(buffer, sizeof("00:00:00"), "%I:%M:%S", tick_time);
-  }
-
-  // Display this time on the TextLayer
-  text_layer_set_text(s_time_layer, buffer);
-}
+static uint32_t sushi_resource_id;
 
 static void sushi_step(){
+  
+  Layer *window_layer = window_get_root_layer(s_main_window);
+  GRect window_bounds = layer_get_bounds(window_layer);
+  
   GRect bounds = layer_get_bounds(bitmap_layer_get_layer(s_background_layer));
   int16_t current_x = bounds.origin.x;
-  
-  // end = 720px - 144px
-  if(current_x == -576) {
+
+  if(current_x == window_bounds.size.w-720 ) {
     layer_set_bounds(bitmap_layer_get_layer(s_background_layer), GRect(0, bounds.origin.y, bounds.size.w, bounds.size.h));
   }else{
-    layer_set_bounds(bitmap_layer_get_layer(s_background_layer), GRect(current_x-24, bounds.origin.y, bounds.size.w, bounds.size.h));
+    layer_set_bounds(bitmap_layer_get_layer(s_background_layer), GRect(current_x-36, bounds.origin.y, bounds.size.w, bounds.size.h));
   }
 }
 
@@ -47,25 +34,49 @@ static void handle_battery(BatteryChargeState charge_state) {
   text_layer_set_text(s_battery_layer, battery_text);
 }
 
+static void update_time() {
+  // Get a tm structure
+  time_t temp = time(NULL); 
+  struct tm *tick_time = localtime(&temp);
+  static char buffer[] = "00:00:00";
+  if(clock_is_24h_style() == true) {
+    //Use 2h hour format
+    strftime(buffer, sizeof("00:00:00"), "%H:%M:%S", tick_time);
+  } else {
+    //Use 12 hour format
+    strftime(buffer, sizeof("00:00:00"), "%I:%M:%S", tick_time);
+  }
+  // Display this time on the TextLayer
+  text_layer_set_text(s_time_layer, buffer);
+  
+  sushi_step();
+}
+
 
 static void main_window_load(Window *window) {
+  
+  Layer *window_layer = window_get_root_layer(window);
+  GRect bounds = layer_get_bounds(window_layer);
+
   //Create GBitmap, then set to created BitmapLayer
-  s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_SUSHI_S);
+  sushi_resource_id = RESOURCE_ID_SUSHI_S;
+  s_background_bitmap = gbitmap_create_with_resource(sushi_resource_id);
   s_background_layer = bitmap_layer_create(GRect(0, 60, 720, 72));
   bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_background_layer));
   
+  
   //Create GFont
-  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_VIGRO_28));
+  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_VIGRO_26));
   // Create time TextLayer
-  s_time_layer = text_layer_create(GRect(5, 18, 139, 50));
+  s_time_layer = text_layer_create(GRect(0, 20, bounds.size.w, 52));
   text_layer_set_background_color(s_time_layer, GColorClear);
   text_layer_set_text_color(s_time_layer, GColorDarkGreen);
   text_layer_set_text(s_time_layer, "00:00:00");
   text_layer_set_font(s_time_layer, s_time_font);
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
 
-  s_battery_layer = text_layer_create(GRect(0, 140, 144, 34));
+  s_battery_layer = text_layer_create(GRect(0, 140, bounds.size.w, 34));
   text_layer_set_text_color(s_battery_layer, GColorDarkGreen);
   text_layer_set_background_color(s_battery_layer, GColorClear);
   text_layer_set_font(s_battery_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
@@ -96,7 +107,6 @@ static void main_window_unload(Window *window) {
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
-  sushi_step();
 }
   
 static void init() {
